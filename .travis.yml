@@ -6,6 +6,7 @@ deploy:
   api_key:
     secure: IZaqjdQKX9LpA/gtztm5LXPx+QjzbFGTx8GO17ZnD3E+hDPSMh9Cv6bwDGXmo6/cEdtSZm2gfSEnaEolyfuMirpW/8uKg4BDkxK0SPn9Rewl764dVaJQc0gCG/BnJ5MA/KDgqIHyrZemMyHYW3UFUZG+6Df6UHHBOJFhBLHDXOo=
   file: target/angular-app.jar
+  draft: false
   on:
     repo: fabiojmendes/spring-boot-angular
     tags: true
