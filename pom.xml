@@ -4,7 +4,7 @@
 
 	<groupId>org.test</groupId>
 	<artifactId>single</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>single</name>
