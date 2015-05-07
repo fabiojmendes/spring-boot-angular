@@ -8,3 +8,4 @@ deploy:
   file: target/*.jar
   on:
     repo: fabiojmendes/spring-boot-angular
+	tags: true
