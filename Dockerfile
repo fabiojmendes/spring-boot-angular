@@ -8,9 +8,10 @@ RUN mkdir /tmp/install
 WORKDIR /tmp/install
 
 COPY pom.xml ./
-COPY src/main/docker/* ./
+COPY src/main/docker ./
 
 RUN bash script.sh
+
 WORKDIR /
 RUN rm -rf /tmp/install /var/lib/apt/lists/*
 
