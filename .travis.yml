@@ -8,7 +8,7 @@ install: true
 script: "mvn deploy --settings .repo-settings.xml -B"
 
 after_success:
-  - curl -H "Content-Type: application/json" --data '{"build": true}' -X POST https://registry.hub.docker.com/u/fabiojmendes/spring-boot-angular/trigger/7b4affb0-8797-4544-8d4e-76670c9b6e84/
+  - "curl -H 'Content-Type: application/json' --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/fabiojmendes/spring-boot-angular/trigger/7b4affb0-8797-4544-8d4e-76670c9b6e84/"
 
 env:
   global:
