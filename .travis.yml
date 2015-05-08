@@ -3,8 +3,11 @@ language: java
 jdk:
   - oraclejdk8
 
-before_script:
-  - mkdir -p shippable/buildoutput
+install: true
 
-after_script:
-  - cp -r target/*.jar ./shippable/buildoutput/
+script: "mvn deploy --settings .repo-settings.xml -B"
+
+env:
+  global:
+  - secure: KecMyd8ua7Q/nNSWL7rdxRbrEpxI9KXHW4RlxSmkUhhkd/weGgXg9rhQOufrruPFQjD3c36ntACFc8XQCkwgG66by3qz6lu/WhFM3oN04SJudPrzfj4YjmhRv2FTdxzK6jfChhx/KEa4knYD2M3hj9rIGQwg5X1ktysdl7UWI9U=
+  - secure: QztO5+aU7rwV9Ze3w2RP0e/azr27PHcQx8Lz6H3QltWuhu2tJju0kAButvlNpWkD3s8vXmkEZQBLwQfZq0Wmu/BbTA5ueYFfewbzOAi84Q8JhppTklfLrB0mjLJO0/NKMDtz+LPxt3Hl3Pj+5Bf3pwZjKHYc57+i9YnnEALF8Aw=
