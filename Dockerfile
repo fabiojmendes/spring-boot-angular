@@ -1,7 +1,14 @@
 FROM java:8
 
-ENV VERSION=single-0.0.3
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		xmlstarlet \
+	&& rm -rf /var/lib/apt/lists/*
 
-ADD https://github.com/fabiojmendes/spring-boot-angular/releases/download/$VERSION/angular-app.jar /opt/
+WORKDIR /tmp/
+
+COPY pom.xml .
+COPY docker/script.sh .
+
+RUN ./script.sh && rm *
 
 EXPOSE 8080
