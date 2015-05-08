@@ -3,7 +3,9 @@ language: java
 jdk:
   - oraclejdk8
 
-script: "mvn deploy --settings .repo-settings.xml"
+install:
+
+script: "mvn deploy --settings .repo-settings.xml -B"
 
 env:
   global:
