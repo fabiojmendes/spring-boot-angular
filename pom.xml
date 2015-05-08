@@ -58,11 +58,10 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/fabiojmendes/spring-boot-angular.git</connection>
-	  <tag>HEAD</tag>
-  </scm>
+	<tag>HEAD</tag>
+</scm>
 
 	<build>
-		<finalName>angular-app</finalName>
 		<resources>
 			<resource>
 				<directory>${project.basedir}/src/main/resources</directory>
@@ -173,4 +172,17 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>archiva.internal</id>
+			<name>Archiva Managed Internal Repository</name>
+			<url>http://janine.navita.com.br/archiva/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>archiva.snapshots</id>
+			<url>http://janine.navita.com.br/archiva/repository/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>
