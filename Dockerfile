@@ -6,8 +6,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /tmp/
 
-COPY pom.xml .
-COPY docker/script.sh .
+COPY pom.xml ./
+COPY docker/script.sh ./
 
 RUN ./script.sh && rm *
 

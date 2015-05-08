@@ -22,7 +22,7 @@ curl $BASE_URL/$GROUP/$ARTIFACT/$VERSION/$FILE -o /opt/angular-app.jar
 echo "Downloading shasum..."
 SHASUM=$(curl $BASE_URL/$GROUP/$ARTIFACT/$VERSION/$FILE.sha1)
 
-echo "$SHASUM /opt/angular-app.jar" > $FILE.sha1
+echo "$SHASUM  /opt/angular-app.jar" > $FILE.sha1
 
 shasum -c $FILE.sha1
 RESULT=$?
