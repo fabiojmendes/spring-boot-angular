@@ -1,6 +1,11 @@
 security:
   user:
     password: password
+
+endpoints:
+  shutdown:
+    enabled: true
+
 logging:
   level:
     org.springframework.security: DEBUG
