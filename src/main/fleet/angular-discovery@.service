@@ -1,0 +1,31 @@
+[Unit]
+Description=angular web app etcd registration
+
+# Requirements
+Requires=etcd.service
+
+# Dependency ordering and binding
+After=etcd.service
+BindsTo=angular@%i.service
+
+[Service]
+#Start
+ExecStart=/bin/bash -c '\
+	while true; do \
+		PORT=$(docker port angular%i 8080 | cut -d: -f2); \
+		HOST=$(hostname -i | sed "s/ $//"); \
+		echo "Registering $HOST:$PORT..."; \
+		if [ "$PORT" != "" ]; then \
+			etcdctl set /webapps/%i "$HOST:$PORT" --ttl 20; \
+		else \
+			etcdctl rm /webapps/%i; \
+		fi; \
+		sleep 15; \
+	done'
+
+# Stop
+ExecStop=-/usr/bin/etcdctl rm /webapps/%i
+
+[X-Fleet]
+# Schedule on the same machine as the associated angular service
+X-ConditionMachineOf=angular@%i.service

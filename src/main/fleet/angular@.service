@@ -1,0 +1,15 @@
+[Unit]
+Description=Angular WEB App
+Requires=docker.service
+Requires=etcd.service
+Requires=angular-discovery@%i.service
+
+After=docker.service
+After=etcd.service
+Before=angular-discovery@%i.service
+ 
+[Service]
+TimeoutStartSec=0
+ExecStartPre=/usr/bin/docker pull fabiojmendes/spring-boot-angular
+ExecStart=/usr/bin/docker run --rm --name angular%i -P fabiojmendes/spring-boot-angular java -jar /opt/angular-app.jar
+ExecStop=/usr/bin/docker stop angular%i
