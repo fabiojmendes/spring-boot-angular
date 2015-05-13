@@ -1,6 +1,7 @@
 FROM java:8
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y --no-install-recommends \
 		xmlstarlet
 
 RUN mkdir /tmp/install
@@ -12,7 +13,9 @@ COPY src/main/docker ./
 
 RUN bash script.sh
 
-WORKDIR /
+WORKDIR /opt
+
+RUN apt-get autoremove -y
 RUN rm -rf /tmp/install /var/lib/apt/lists/*
 
 EXPOSE 8080
