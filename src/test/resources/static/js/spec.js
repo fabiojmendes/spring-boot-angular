@@ -30,9 +30,10 @@ describe("App", function() {
 
 		it("says Hello Test when controller loads", function() {
 			var $scope = {};
-			$httpBackend.expectGET('/resource/').respond(200, {
+			$httpBackend.expectGET('/resource').respond(200, {
 				id : 4321,
-				content : 'Hello Test'
+				content : 'Hello Test',
+				resource: 'sha1'
 			});
 			var controller = $controller('home', {
 				$scope : $scope
