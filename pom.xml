@@ -40,6 +40,15 @@
 		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.dropwizard.metrics</groupId>
+			<artifactId>metrics-jvm</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.dropwizard.metrics</groupId>
+			<artifactId>metrics-servlet</artifactId>
 			<version>3.1.0</version>
 		</dependency>
 		<!--
@@ -77,8 +86,8 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/fabiojmendes/spring-boot-angular.git</connection>
-	<tag>HEAD</tag>
-</scm>
+		<tag>v${project.version}</tag>
+	</scm>
 
 	<build>
 		<resources>
