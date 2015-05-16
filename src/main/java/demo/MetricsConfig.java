@@ -37,7 +37,7 @@ public class MetricsConfig {
 
 	@Configuration
 	@Profile("production")
-	private static class DatadogMetricConfig {
+	static class DatadogMetricConfig {
 
 		@Value("${HOSTNAME}")
 		private String hostname;
