@@ -9,3 +9,8 @@ security:
 logging:
   level:
     org.springframework.security: WARN
+
+server:
+  tomcat:
+    protocol-header: x-forwarded-proto
+    remote-ip-header: x-forwarded-for
