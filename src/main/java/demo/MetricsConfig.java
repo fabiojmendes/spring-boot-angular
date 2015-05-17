@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.codahale.metrics.JmxReporter;
-import com.codahale.metrics.JvmAttributeGaugeSet;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.jvm.GarbageCollectorMetricSet;
 import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
@@ -30,7 +29,6 @@ public class MetricsConfig {
 		return () -> {
 			registry.registerAll(new GarbageCollectorMetricSet());
 			registry.registerAll(new MemoryUsageGaugeSet());
-			registry.registerAll(new JvmAttributeGaugeSet());
 		};
 	}
 
