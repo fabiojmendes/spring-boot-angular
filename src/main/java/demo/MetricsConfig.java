@@ -82,6 +82,5 @@ public class MetricsConfig {
 			reporter.start(5, TimeUnit.SECONDS);
 			return reporter;
 		}
-
 	}
 }

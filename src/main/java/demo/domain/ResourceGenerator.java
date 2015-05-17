@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResourceGenerator {
 
-	@Value("${application.bufferSize:10485760}")
+	@Value("${application.bufferSize:10240}")
 	private int bufferSize;
 
 	public String generate() {
