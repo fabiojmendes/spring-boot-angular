@@ -12,9 +12,12 @@ install: true
 
 before_install:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker build .
 
 script:
+  - mvn clean package
+  - docker build .
+
+deploy:
   - docker push ${DOCKER_USERNAME}/spring-boot-angular
 
 env:
