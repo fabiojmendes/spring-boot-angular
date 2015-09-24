@@ -24,7 +24,7 @@ script:
   - docker build .
 
 after_success:
-  - docker push ${DOCKER_USERNAME}/spring-boot-angular
+  - docker push fabiojmendes/spring-boot-angular
 
 env:
   global:
