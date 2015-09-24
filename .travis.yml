@@ -17,7 +17,7 @@ services:
 ##################################
 
 env:
-  DOCKER_IMAGE: spring-boot-angular
+  DOCKER_IMAGE:spring-boot-angular
   global:
     - secure: HkaRcOzQWpMWPya1mT8P0CwBgMIIO5qaz/N97ZkkTYKQ3CJbQPJ6HIhmSTC1e2eWejAqKcy0GMXGJUP/IghycieMoAsu9eB0+0fe4zB2CgyRftCV/FescqlVm45Ebsgm9TjndJG7jjsPXdiw+BFiAB4GQrqyAPHf4gNzeUnVqg0=
     - secure: CvkPpIvi2T74hGtU4wuVoXm9sDaW9vS4Tj7i8a4CebQBoL1URwezrp3mbJQXgg/x2oXWbCtZMNGCLLoPqUp5I9O+OlRd4W3ye/wbLaSk9Wb9fEKXwTUR7zQjqWRJulrj8/L1TQQozKq43Cs1RW8MoxkaArSg0sqU14hVDSec1zA=
@@ -31,11 +31,11 @@ env:
 
 script:
   - mvn test
-  - docker build -t "$DOCKER_USERNAME"/"$DOCKER_IMAGE" .
+  - docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE .
 
 after_success:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push "$DOCKER_USERNAME"/"$DOCKER_IMAGE"
+  - docker push $DOCKER_USERNAME/$DOCKER_IMAGE
 
 after_script:
   - rm -rf ~/.docker
