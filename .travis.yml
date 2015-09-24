@@ -1,3 +1,7 @@
+##################################
+## General Configuration        ##
+##################################
+
 sudo: required
 
 language: java
@@ -8,11 +12,22 @@ jdk:
 services:
   - docker
 
-install: true
+##################################
+## Build Steps                  ##
+##################################
 
 before_install:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 
 script:
-  - mvn clean package
+  - mvn test
   - docker build .
+
+after_success:
+  - docker push ${DOCKER_USERNAME}/spring-boot-angular
+
+env:
+  global:
+    - secure: HkaRcOzQWpMWPya1mT8P0CwBgMIIO5qaz/N97ZkkTYKQ3CJbQPJ6HIhmSTC1e2eWejAqKcy0GMXGJUP/IghycieMoAsu9eB0+0fe4zB2CgyRftCV/FescqlVm45Ebsgm9TjndJG7jjsPXdiw+BFiAB4GQrqyAPHf4gNzeUnVqg0=
+    - secure: CvkPpIvi2T74hGtU4wuVoXm9sDaW9vS4Tj7i8a4CebQBoL1URwezrp3mbJQXgg/x2oXWbCtZMNGCLLoPqUp5I9O+OlRd4W3ye/wbLaSk9Wb9fEKXwTUR7zQjqWRJulrj8/L1TQQozKq43Cs1RW8MoxkaArSg0sqU14hVDSec1zA=
+    - secure: b0iX/atnE86Thv47ODVbqVrD/TEtvWPpRXhSHc9/XZIsNis0F+4J+nVFH5vUh5vR7cy/DwLuRB477ihixuNxkI5JiOTLEND4yH4F+qoCqFnzjtTTKBcz6jvUQ7Kq0bTmADKf0ZsgLqVNG+SRRzgdmyKk1vJCUdAFx1UAhx/WLmQ=
