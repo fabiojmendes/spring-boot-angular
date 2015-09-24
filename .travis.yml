@@ -21,12 +21,13 @@ before_install:
 
 script:
   - mvn test
-  - docker build .
+  - docker build -t fabiojmendes/spring-boot-angular .
 
 after_success:
   - docker push fabiojmendes/spring-boot-angular
 
 after_script:
+  - ls -la ~/.docker
   - rm -rf ~/.docker
 
 env:
