@@ -27,10 +27,11 @@ env:
 ## Build Steps                  ##
 ##################################
 
-before_install:
-  - echo $DOCKER_IMAGE
-  - echo $DOCKER_USERNAME
-  - echo $DOCKER_USERNAME/$DOCKER_IMAGE
+#before_install:
+#install:
+#after_install:
+
+#before_script:
 
 script:
   - mvn test
@@ -39,6 +40,8 @@ script:
 after_success:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push $DOCKER_USERNAME/$DOCKER_IMAGE
+
+#after_failure:
 
 after_script:
   - rm -rf ~/.docker
