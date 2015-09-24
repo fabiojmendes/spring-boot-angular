@@ -16,14 +16,14 @@ services:
 ## Build Steps                  ##
 ##################################
 
-before_install:
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+#before_install:
 
 script:
   - mvn test
   - docker build .
 
 after_success:
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push fabiojmendes/spring-boot-angular
 
 env:
