@@ -13,7 +13,7 @@ services:
   - docker
 
 ##################################
-## Build Steps                  ##
+## Environment                  ##
 ##################################
 
 env:
@@ -23,15 +23,19 @@ env:
     - secure: CvkPpIvi2T74hGtU4wuVoXm9sDaW9vS4Tj7i8a4CebQBoL1URwezrp3mbJQXgg/x2oXWbCtZMNGCLLoPqUp5I9O+OlRd4W3ye/wbLaSk9Wb9fEKXwTUR7zQjqWRJulrj8/L1TQQozKq43Cs1RW8MoxkaArSg0sqU14hVDSec1zA=
     - secure: b0iX/atnE86Thv47ODVbqVrD/TEtvWPpRXhSHc9/XZIsNis0F+4J+nVFH5vUh5vR7cy/DwLuRB477ihixuNxkI5JiOTLEND4yH4F+qoCqFnzjtTTKBcz6jvUQ7Kq0bTmADKf0ZsgLqVNG+SRRzgdmyKk1vJCUdAFx1UAhx/WLmQ=
 
+##################################
+## Build Steps                  ##
+##################################
+
 before_install:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 
 script:
   - mvn test
-  - docker build -t ${DOCKER_USERNAME}/${DOCKER_IMAGE} .
+  - docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE .
 
 after_success:
-  - docker push ${DOCKER_USERNAME/$DOCKER_IMAGE}
+  - docker push $DOCKER_USERNAME/$DOCKER_IMAGE
 
 after_script:
   - rm -rf ~/.docker
