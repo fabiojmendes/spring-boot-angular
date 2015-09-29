@@ -1,6 +1,10 @@
-.settings
-.DS_Store
+# Eclipse
 .project
 .settings
 .classpath
+
+# Maven
 target
+
+# Mac OSX
+.DS_Store

@@ -15,9 +15,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.2.RELEASE</version>
+		<version>1.2.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -62,6 +66,24 @@
 			<scope>runtime</scope>
 		</dependency>
 		<!--
+			### WEBJARS DEPENDENCIES ###
+		-->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>angularjs</artifactId>
+			<version>1.3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+		<!--
 			### TEST DEPENDENCIES ###
 		-->
 		<dependency>
@@ -69,153 +91,34 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>angularjs</artifactId>
-			<version>1.3.15</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>jasmine</artifactId>
-			<version>2.2.0</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<wro4j.version>1.7.6</wro4j.version>
-		<java.version>1.8</java.version>
-	</properties>
 
 	<scm>
 		<connection>scm:git:https://github.com/fabiojmendes/spring-boot-angular.git</connection>
-		<tag>v${project.version}</tag>
 	</scm>
 
 	<build>
-		<resources>
-			<resource>
-				<directory>${project.basedir}/src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>${project.build.directory}/generated-resources</directory>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.3</version>
 				<executions>
 					<execution>
-						<!-- Serves *only* to filter the wro.xml so it can get an absolute
-							path for the project -->
-						<id>copy-resources</id>
 						<phase>validate</phase>
 						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/wro</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/wro</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>ro.isdc.wro4j</groupId>
-				<artifactId>wro4j-maven-plugin</artifactId>
-				<version>${wro4j.version}</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>run</goal>
+							<goal>create</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
-					<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
-					<cssDestinationFolder>${project.build.directory}/generated-resources/static/css</cssDestinationFolder>
-					<jsDestinationFolder>${project.build.directory}/generated-resources/static/js</jsDestinationFolder>
-					<wroFile>${project.build.directory}/wro/wro.xml</wroFile>
-					<extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
-					<contextFolder>${basedir}/src/main/wro</contextFolder>
+					<shortRevisionLength>7</shortRevisionLength>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.webjars</groupId>
-						<artifactId>jquery</artifactId>
-						<version>2.1.1</version>
-					</dependency>
-					<dependency>
-						<groupId>org.webjars</groupId>
-						<artifactId>angularjs</artifactId>
-						<version>1.3.15</version>
-					</dependency>
-					<dependency>
-						<groupId>org.webjars</groupId>
-						<artifactId>bootstrap</artifactId>
-						<version>3.2.0</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>com.github.searls</groupId>
-				<artifactId>jasmine-maven-plugin</artifactId>
-				<version>2.0-alpha-01</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<additionalContexts>
-						<context>
-							<contextRoot>/lib</contextRoot>
-							<directory>${project.build.directory}/generated-resources/static/js</directory>
-						</context>
-					</additionalContexts>
-					<preloadSources>
-						<source>/lib/angular-bootstrap.js</source>
-						<source>/webjars/angularjs/1.3.15/angular-mocks.js</source>
-					</preloadSources>
-					<jsSrcDir>${project.basedir}/src/main/resources/static/js</jsSrcDir>
-					<jsTestSrcDir>${project.basedir}/src/test/resources/static/js</jsTestSrcDir>
-					<webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.webjars</groupId>
-						<artifactId>angularjs</artifactId>
-						<version>1.3.15</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>archiva.internal</id>
-			<name>Archiva Managed Internal Repository</name>
-			<url>http://janine.navita.com.br/archiva/repository/internal</url>
-		</repository>
-		<snapshotRepository>
-			<id>archiva.snapshots</id>
-			<url>http://janine.navita.com.br/archiva/repository/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 </project>
