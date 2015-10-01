@@ -25,3 +25,7 @@ info:
     description: "@description@"
     version: "@version@"
     build: "@buildNumber@"
+
+spring:
+  datasource:
+    url: jdbc:derby:target/db;create=true;logDevice=./target/db

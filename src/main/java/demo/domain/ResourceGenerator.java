@@ -4,31 +4,40 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Fábio Jackson Mendes <fabio.mendes@navita.com.br> [May 12, 2015]
  *
  */
-@Component
+@Service
+@Transactional
 @ConfigurationProperties(prefix = "application")
 public class ResourceGenerator {
 
 	private int bufferSize;
+	
+	private ResourceRepository resourceRepository;
 
-	public ResourceGenerator() {
+	@Autowired
+	public ResourceGenerator(ResourceRepository resourceRepository) {
 		bufferSize = 1024;
+		this.resourceRepository = resourceRepository;
 	}
 
 	public void setBufferSize(int bufferSize) {
 		this.bufferSize = bufferSize;
 	}
 
-	public String generate() {
+	public Resource generate() {
 		List<Double> buffer = new ArrayList<>(bufferSize);
 		for (int i = 0; i < bufferSize; i++) {
 			buffer.add(0.0);
@@ -40,6 +49,9 @@ public class ResourceGenerator {
 				.sorted()
 				.collect(Collectors.toList());
 
-		return DigestUtils.sha1Hex(list.toString());
+		String key = DigestUtils.sha1Hex(list.toString());
+		Resource resource = new Resource(UUID.randomUUID());
+		resource.setKey(key);
+		return resourceRepository.save(resource);
 	}
 }
