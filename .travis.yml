@@ -27,7 +27,9 @@ env:
 ## Build Steps                  ##
 ##################################
 
-#before_install:
+before_install:
+  - pip install --user codecov
+
 #install:
 #after_install:
 
@@ -38,6 +40,7 @@ script:
   - docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE .
 
 after_success:
+  - codecov
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push $DOCKER_USERNAME/$DOCKER_IMAGE
 

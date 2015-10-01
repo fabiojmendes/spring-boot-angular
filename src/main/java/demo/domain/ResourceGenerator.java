@@ -1,8 +1,5 @@
 package demo.domain;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +7,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,10 +15,18 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@ConfigurationProperties(prefix = "application")
 public class ResourceGenerator {
 
-	@Value("${application.bufferSize:25600}") // 25KB
 	private int bufferSize;
+
+	public ResourceGenerator() {
+		bufferSize = 1024;
+	}
+
+	public void setBufferSize(int bufferSize) {
+		this.bufferSize = bufferSize;
+	}
 
 	public String generate() {
 		List<Double> buffer = new ArrayList<>(bufferSize);
@@ -35,13 +40,6 @@ public class ResourceGenerator {
 				.sorted()
 				.collect(Collectors.toList());
 
-		try (ByteArrayOutputStream objectBuffer = new ByteArrayOutputStream();
-				ObjectOutputStream writer =	new ObjectOutputStream(objectBuffer)) {
-
-			writer.writeObject(list);
-			return DigestUtils.sha1Hex(objectBuffer.toByteArray());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		return DigestUtils.sha1Hex(list.toString());
 	}
 }

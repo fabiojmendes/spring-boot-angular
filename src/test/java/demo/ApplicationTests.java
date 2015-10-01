@@ -50,4 +50,11 @@ public class ApplicationTests {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
+	@Test
+	public void resourceEndpointSucceeds() {
+		RestTemplate template = new TestRestTemplate("user", "password");
+		ResponseEntity<String> response = template.getForEntity(baseUrl + "/resource", String.class);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+
 }

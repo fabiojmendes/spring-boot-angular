@@ -6,6 +6,9 @@ security:
 #  shutdown:
 #    enabled: true
 
+application:
+  buffer-size: 25600
+
 logging:
   level:
     org.springframework.security: WARN
