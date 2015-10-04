@@ -1,10 +1,11 @@
-package demo;
+package org.demo.integration;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.util.UUID;
 
+import org.demo.domain.resource.Resource;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -14,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import demo.domain.Resource;
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ResourceApplicationTests extends BaseIntegrationTests {
 
@@ -24,7 +23,7 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 	private final String testName = "Test Name";
 
 	@Test
-	public void test00_AddOne() {
+	public void testAddOne() {
 		ResponseEntity<Resource> response = template.postForEntity(baseUrl + "/resource?name={name}", null, Resource.class, testName);
 		assertThat(response.getStatusCode(), is(HttpStatus.OK));
 		Resource testResource = response.getBody();
@@ -62,9 +61,16 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 	}
 
 	@Test
-	public void testZZ_Delete() {
+	public void testDelete() {
 		template.delete(baseUrl + "/resource/{id}", TestData.R3.getId());
 		ResponseEntity<String> response = template.getForEntity(baseUrl + "/resource/{id}", String.class, TestData.R3.getId());
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+	}
+
+
+	@Test
+	public void testInvalidDelete() {
+		ResponseEntity<String> response = template.exchange(baseUrl + "/resource/{id}", HttpMethod.DELETE, null, String.class, UUID.randomUUID());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 	}
 }

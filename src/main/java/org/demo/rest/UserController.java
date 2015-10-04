@@ -1,4 +1,4 @@
-package demo.api;
+package org.demo.rest;
 
 import java.security.Principal;
 

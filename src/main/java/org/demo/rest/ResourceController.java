@@ -1,17 +1,16 @@
-package demo.api;
+package org.demo.rest;
 
 import java.util.UUID;
 
+import org.demo.domain.resource.Resource;
+import org.demo.domain.resource.ResourceGenerator;
+import org.demo.domain.resource.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import demo.domain.Resource;
-import demo.domain.ResourceGenerator;
-import demo.domain.ResourceRepository;
 
 /**
  * @author Fábio Jackson Mendes <fabio.mendes@navita.com.br> [May 12, 2015]

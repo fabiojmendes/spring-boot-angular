@@ -1,5 +1,8 @@
-package demo;
+package org.demo.integration;
 
+import org.demo.Application;
+import org.demo.domain.resource.Resource;
+import org.demo.domain.resource.ResourceGenerator;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import demo.domain.Resource;
-import demo.domain.ResourceGenerator;
 
 /**
  * @author Fabio Mendes <fabio.mendes@navita.com.br> Oct 4, 2015

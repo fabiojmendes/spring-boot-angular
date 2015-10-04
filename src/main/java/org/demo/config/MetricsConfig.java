@@ -1,4 +1,4 @@
-package demo;
+package org.demo.config;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;

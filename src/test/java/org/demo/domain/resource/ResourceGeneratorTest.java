@@ -1,4 +1,4 @@
-package demo.domain;
+package org.demo.domain.resource;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -8,6 +8,9 @@ import static org.mockito.Mockito.*;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.demo.domain.resource.Resource;
+import org.demo.domain.resource.ResourceGenerator;
+import org.demo.domain.resource.ResourceRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
