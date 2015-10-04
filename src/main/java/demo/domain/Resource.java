@@ -8,13 +8,15 @@ import javax.persistence.Id;
 
 @Entity
 public class Resource {
-	
+
 	@Id
 	private UUID id;
-	
+
 	@Column(name = "key_")
 	private String key;
-	
+
+	private String name;
+
 	@Deprecated
 	public Resource() {}
 
@@ -41,5 +43,19 @@ public class Resource {
 	 */
 	public void setKey(String key) {
 		this.key = key;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 }
