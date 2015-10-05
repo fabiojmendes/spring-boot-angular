@@ -8,3 +8,5 @@ target
 
 # Mac OSX
 .DS_Store
+data
+derby.log

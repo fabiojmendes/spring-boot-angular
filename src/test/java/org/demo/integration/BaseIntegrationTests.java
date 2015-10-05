@@ -22,10 +22,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 	Application.class, BaseIntegrationTests.TestData.class
 })
 @WebAppConfiguration
-@IntegrationTest({
-	"server.port:0",
-	"spring.datasource.url: jdbc:derby:target/test-db;create=true"
-})
+@IntegrationTest
 public abstract class BaseIntegrationTests {
 
 	@Value("http://localhost:${local.server.port}")

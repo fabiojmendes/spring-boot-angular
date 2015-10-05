@@ -9,10 +9,10 @@ import javax.persistence.Id;
 @Entity
 public class Resource {
 
-	@Id
+	@Id @Column(length = 16)
 	private UUID id;
 
-	@Column(name = "key_")
+	@Column(name = "key_", length = 40)
 	private String key;
 
 	private String name;
