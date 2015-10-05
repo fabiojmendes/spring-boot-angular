@@ -1,5 +1,6 @@
 package org.demo.rest;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.demo.domain.resource.Resource;
@@ -41,12 +42,8 @@ public class ResourceController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Resource getOne(@PathVariable("id") Resource resource) {
-		if (resource != null) {
-			return resource;
-		} else {
-			throw new IllegalArgumentException();
-		}
+	public Resource getOne(@PathVariable("id") Optional<Resource> resource) {
+		return resource.orElseThrow(IllegalArgumentException::new);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
