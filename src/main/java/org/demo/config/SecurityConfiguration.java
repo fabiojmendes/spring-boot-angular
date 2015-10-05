@@ -10,13 +10,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	private String[] publicResources = new String[] {
+		"/",
+		"/index.html",
+		"/home.html",
+		"/login.html",
+		"/webjars/**"
+	};
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.httpBasic()
 			.and()
 			.authorizeRequests()
-				.antMatchers("/index.html", "/home.html", "/login.html", "/").permitAll()
+				.antMatchers(publicResources).permitAll()
 				.anyRequest().authenticated()
 			.and()
 				.csrf().disable();
