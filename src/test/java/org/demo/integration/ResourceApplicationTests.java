@@ -6,10 +6,12 @@ import static org.junit.Assert.*;
 import java.util.UUID;
 
 import org.demo.domain.resource.Resource;
+import org.demo.rest.ResourceForm;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 
 	@Test
 	public void testAddOne() {
-		ResponseEntity<Resource> response = template.postForEntity(baseUrl + "/resource?name={name}", null, Resource.class, testName);
+		ResponseEntity<Resource> response = template.postForEntity(baseUrl + "/resource", new ResourceForm(testName), Resource.class);
 		assertThat(response.getStatusCode(), is(HttpStatus.OK));
 		Resource testResource = response.getBody();
 		assertThat(testResource.getId(), notNullValue());
@@ -44,7 +46,7 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 
 	@Test
 	public void testUpdate() {
-		template.put(baseUrl + "/resource/{id}?name={name}", null, TestData.R2.getId(), testName);
+		template.put(baseUrl + "/resource/{id}", new ResourceForm(testName), TestData.R2.getId());
 		ResponseEntity<Resource> response = template.getForEntity(baseUrl + "/resource/{id}", Resource.class, TestData.R2.getId());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		Resource responseResource = response.getBody();
@@ -56,7 +58,8 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 
 	@Test
 	public void testInvalidUpdate() {
-		ResponseEntity<String> response = template.exchange(baseUrl + "/resource/{id}?name={name}", HttpMethod.PUT, null, String.class, UUID.randomUUID(), testName);
+		HttpEntity<ResourceForm> payload = new HttpEntity<>(new ResourceForm(testName));
+		ResponseEntity<String> response = template.exchange(baseUrl + "/resource/{id}", HttpMethod.PUT, payload, String.class, UUID.randomUUID());
 		assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
 	}
 

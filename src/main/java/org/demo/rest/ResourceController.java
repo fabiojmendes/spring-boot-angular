@@ -7,10 +7,11 @@ import org.demo.domain.resource.Resource;
 import org.demo.domain.resource.ResourceGenerator;
 import org.demo.domain.resource.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,12 +34,12 @@ public class ResourceController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Resource> getAll() {
-		return resourceRepository.findAll();
+		return resourceRepository.findAll(new Sort("name"));
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Resource create(@RequestParam String name) {
-		return generator.generate(name);
+	public Resource create(@RequestBody ResourceForm form) {
+		return generator.generate(form.name);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -47,8 +48,8 @@ public class ResourceController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void update(@PathVariable UUID id, String name) {
-		generator.update(id, name);
+	public void update(@PathVariable UUID id, @RequestBody ResourceForm form) {
+		generator.update(id, form.name);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

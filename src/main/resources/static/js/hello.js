@@ -58,12 +58,10 @@ hello.controller('navigation',  function($rootScope, $scope, $http, $location, $
 	$scope.login = function() {
 		authenticate($scope.credentials, function(authenticated) {
 			if (authenticated) {
-				console.log("Login succeeded")
 				$location.path("/");
 				$scope.error = false;
 				$rootScope.authenticated = true;
 			} else {
-				console.log("Login failed")
 				$location.path("/login");
 				$scope.error = true;
 				$rootScope.authenticated = false;
@@ -76,11 +74,9 @@ hello.controller('navigation',  function($rootScope, $scope, $http, $location, $
 			$rootScope.authenticated = false;
 			$location.path("/");
 		}).error(function(data) {
-			console.log("Logout failed")
 			$rootScope.authenticated = false;
 		});
 	}
-
 });
 
 hello.controller('home', function($scope, $resource) {
@@ -92,8 +88,7 @@ hello.controller('home', function($scope, $resource) {
 
 hello.controller('edit', function($scope, $resource, $routeParams) {
 	var Resource = $resource('/resource/:id', {id: '@id'}, {
-		save: {method: 'POST', params: {name: '@name'}},
-		update: {method: 'PUT', params: {name: '@name'}}
+		update: {method: 'PUT'}
 	});
 
 	Resource.get({id: $routeParams.resId}, function(res) {
@@ -106,15 +101,13 @@ hello.controller('edit', function($scope, $resource, $routeParams) {
 });
 
 hello.controller('add', function($scope, $resource, $routeParams, $location) {
-	var Resource = $resource('/resource', null, {
-		save: {method: 'POST', params: {name: '@name'}}
-	});
+	var Resource = $resource('/resource');
 
 	$scope.res = new Resource();
 
 	$scope.save = function() {
 		$scope.res.$save(function(res) {
-			$location.path("/edit/" + res.id);
+			$location.path("/");
 		});
 	};
 });

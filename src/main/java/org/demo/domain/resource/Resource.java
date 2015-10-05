@@ -12,7 +12,7 @@ public class Resource {
 	@Id @Column(length = 16)
 	private UUID id;
 
-	@Column(name = "key_", length = 40)
+	@Column(name = "key_", length = 40, nullable = false)
 	private String key;
 
 	private String name;
