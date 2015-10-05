@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	private String[] publicResources = new String[] {
+	private static final String[] PUBLIC_RESOURCES = new String[] {
 		"/",
 		"/index.html",
 		"/home.html",
@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.httpBasic()
 			.and()
 			.authorizeRequests()
-				.antMatchers(publicResources).permitAll()
+				.antMatchers(PUBLIC_RESOURCES).permitAll()
 				.anyRequest().authenticated()
 			.and()
 				.csrf().disable();
