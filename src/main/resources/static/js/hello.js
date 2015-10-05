@@ -1,4 +1,4 @@
-var hello = angular.module('hello', [ 'ngRoute' ]);
+var hello = angular.module('hello', [ 'ngRoute', 'ngResource' ]);
 
 hello.config(function($routeProvider, $httpProvider) {
 
@@ -10,6 +10,18 @@ hello.config(function($routeProvider, $httpProvider) {
 		.when('/login', {
 			templateUrl : 'login.html',
 			controller : 'navigation'
+		})
+		.when('/add', {
+			templateUrl : 'form.html',
+			controller : 'add'
+		})
+		.when('/edit/:resId', {
+			templateUrl : 'form.html',
+			controller : 'edit'
+		})
+		.when('/delete/:resId', {
+			template : 'none',
+			controller : 'delete'
 		})
 		.otherwise('/');
 
@@ -71,8 +83,44 @@ hello.controller('navigation',  function($rootScope, $scope, $http, $location, $
 
 });
 
-hello.controller('home', function($scope, $http) {
-	$http.get('/resource').success(function(data) {
-		$scope.list = data;
+hello.controller('home', function($scope, $resource) {
+	var Resource = $resource('/resource')
+	Resource.query(function(resources) {
+		$scope.resources = resources;
 	})
+});
+
+hello.controller('edit', function($scope, $resource, $routeParams) {
+	var Resource = $resource('/resource/:id', {id: '@id'}, {
+		save: {method: 'POST', params: {name: '@name'}},
+		update: {method: 'PUT', params: {name: '@name'}}
+	});
+
+	Resource.get({id: $routeParams.resId}, function(res) {
+		$scope.res = res;
+	});
+
+	$scope.save = function() {
+		$scope.res.$update();
+	};
+});
+
+hello.controller('add', function($scope, $resource, $routeParams, $location) {
+	var Resource = $resource('/resource', null, {
+		save: {method: 'POST', params: {name: '@name'}}
+	});
+
+	$scope.res = new Resource();
+
+	$scope.save = function() {
+		$scope.res.$save(function(res) {
+			$location.path("/edit/" + res.id);
+		});
+	};
+});
+
+hello.controller('delete', function($scope, $resource, $routeParams, $location) {
+	$resource('/resource/:id').delete({id: $routeParams.resId}, function() {
+		$location.path("/");
+	});
 });

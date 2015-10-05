@@ -1,9 +1,25 @@
 <h1>Greeting</h1>
 <div ng-show="authenticated">
-	<p>The ID is {{greeting.id}}</p>
-	<p>The content is {{greeting.content}}</p>
-	<p>The resource is {{greeting.resource}}</p>
+	<a href="#/add">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	</a>
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Key</th>
+			<th>Actions</th>
+		</tr>
+		<tr ng-repeat="res in resources">
+			<td><a href="#/edit/{{res.id}}">{{res.name}}</a></td>
+			<td>{{res.key}}</td>
+			<td>
+				<a href="#/delete/{{res.id}}">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</a>
+			</td>
+		</tr>
+	</table>
 </div>
-<div  ng-show="!authenticated">
+<div ng-show="!authenticated">
 	<p>Login to see your greeting</p>
 </div>

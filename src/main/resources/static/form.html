@@ -1,0 +1,14 @@
+<div class="alert alert-danger" ng-show="error">
+	There was a problem logging in. Please try again.
+</div>
+<form role="form" ng-submit="save()">
+	<div class="form-group" ng-show="res.key">
+		<label for="key">Key:</label>
+		<p>{{res.key}}</p>
+	</div>
+	<div class="form-group">
+		<label for="name">Name:</label>
+		<input type="text" class="form-control" id="name" name="name" ng-model="res.name"/>
+	</div>
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>
