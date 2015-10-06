@@ -13,8 +13,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_RESOURCES = new String[] {
 		"/",
 		"/index.html",
-		"/home.html",
-		"/login.html",
+		"/templates/home.html",
+		"/templates/login.html",
 		"/webjars/**"
 	};
 

@@ -1,35 +1,6 @@
-var hello = angular.module('hello', [ 'ngRoute', 'ngResource' ]);
+var Controllers = angular.module('app.controllers', []);
 
-hello.config(function($routeProvider, $httpProvider) {
-
-	$routeProvider
-		.when('/', {
-			templateUrl : 'home.html',
-			controller : 'home'
-		})
-		.when('/login', {
-			templateUrl : 'login.html',
-			controller : 'navigation'
-		})
-		.when('/add', {
-			templateUrl : 'form.html',
-			controller : 'add'
-		})
-		.when('/edit/:resId', {
-			templateUrl : 'form.html',
-			controller : 'edit'
-		})
-		.when('/delete/:resId', {
-			template : 'none',
-			controller : 'delete'
-		})
-		.otherwise('/');
-
-	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-});
-
-hello.controller('navigation',  function($rootScope, $scope, $http, $location, $route) {
+Controllers.controller('navigation',  function($rootScope, $scope, $http, $location, $route) {
 	$scope.tab = function(route) {
 		return $route.current && route === $route.current.controller;
 	};
@@ -37,7 +8,7 @@ hello.controller('navigation',  function($rootScope, $scope, $http, $location, $
 	var authenticate = function(credentials, callback) {
 		var headers = credentials ? { authorization : "Basic " + btoa(credentials.username + ":" + credentials.password) } : {};
 
-		$http.get('user', {	headers : headers })
+		$http.get('/api/security/user', {	headers : headers })
 			.success(function(data) {
 				if (data.name) {
 					$rootScope.authenticated = true;
@@ -79,19 +50,21 @@ hello.controller('navigation',  function($rootScope, $scope, $http, $location, $
 	}
 });
 
-hello.controller('home', function($scope, $resource) {
-	var Resource = $resource('/resource')
+Controllers.controller('home', function($scope, Resource) {
 	Resource.query(function(resources) {
 		$scope.resources = resources;
-	})
-});
-
-hello.controller('edit', function($scope, $resource, $routeParams) {
-	var Resource = $resource('/resource/:id', {id: '@id'}, {
-		update: {method: 'PUT'}
 	});
 
-	Resource.get({id: $routeParams.resId}, function(res) {
+	$scope.remove = function(res) {
+		Resource.delete({id: res.id}, function() {
+			var index = $scope.resources.indexOf(res);
+			if (index > -1)	$scope.resources.splice(index, 1);
+		});
+	};
+});
+
+Controllers.controller('edit', function($scope, $routeParams, Resource) {
+	Resource.get({id: $routeParams.id}, function(res) {
 		$scope.res = res;
 	});
 
@@ -100,9 +73,7 @@ hello.controller('edit', function($scope, $resource, $routeParams) {
 	};
 });
 
-hello.controller('add', function($scope, $resource, $routeParams, $location) {
-	var Resource = $resource('/resource');
-
+Controllers.controller('add', function($scope, $location, Resource) {
 	$scope.res = new Resource();
 
 	$scope.save = function() {
@@ -110,10 +81,4 @@ hello.controller('add', function($scope, $resource, $routeParams, $location) {
 			$location.path("/");
 		});
 	};
-});
-
-hello.controller('delete', function($scope, $resource, $routeParams, $location) {
-	$resource('/resource/:id').delete({id: $routeParams.resId}, function() {
-		$location.path("/");
-	});
 });

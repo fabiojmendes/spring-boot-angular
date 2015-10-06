@@ -1,8 +1,9 @@
-/**
- *
- */
 package org.demo.rest;
 
+/**
+ * @author Fabio Mendes <fabio.mendes@navita.com.br> Oct 5, 2015
+ *
+ */
 public class ResourceForm {
 
 	String name;

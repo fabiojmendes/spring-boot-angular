@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping("/resource")
+@RequestMapping("/api/resource")
 public class ResourceController {
 
 	private ResourceGenerator generator;

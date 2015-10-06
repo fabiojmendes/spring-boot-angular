@@ -2,11 +2,14 @@
 .project
 .settings
 .classpath
+.tern-project
 
 # Maven
-target
+/target
 
 # Mac OSX
 .DS_Store
-data
-derby.log
+
+# Derby
+/data/
+/derby.log

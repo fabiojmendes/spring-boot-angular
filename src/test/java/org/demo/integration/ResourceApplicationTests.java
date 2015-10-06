@@ -26,7 +26,7 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 
 	@Test
 	public void testAddOne() {
-		ResponseEntity<Resource> response = template.postForEntity(baseUrl + "/resource", new ResourceForm(testName), Resource.class);
+		ResponseEntity<Resource> response = template.postForEntity(baseUrl + "/api/resource", new ResourceForm(testName), Resource.class);
 		assertThat(response.getStatusCode(), is(HttpStatus.OK));
 		Resource testResource = response.getBody();
 		assertThat(testResource.getId(), notNullValue());
@@ -36,7 +36,7 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 
 	@Test
 	public void testGetOne() {
-		ResponseEntity<Resource> response = template.getForEntity(baseUrl + "/resource/{id}", Resource.class, TestData.R1.getId());
+		ResponseEntity<Resource> response = template.getForEntity(baseUrl + "/api/resource/{id}", Resource.class, TestData.R1.getId());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		Resource responseResource = response.getBody();
 		assertThat(responseResource.getId(), is(TestData.R1.getId()));
@@ -46,8 +46,8 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 
 	@Test
 	public void testUpdate() {
-		template.put(baseUrl + "/resource/{id}", new ResourceForm(testName), TestData.R2.getId());
-		ResponseEntity<Resource> response = template.getForEntity(baseUrl + "/resource/{id}", Resource.class, TestData.R2.getId());
+		template.put(baseUrl + "/api/resource/{id}", new ResourceForm(testName), TestData.R2.getId());
+		ResponseEntity<Resource> response = template.getForEntity(baseUrl + "/api/resource/{id}", Resource.class, TestData.R2.getId());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		Resource responseResource = response.getBody();
 		assertThat(responseResource.getId(), is(TestData.R2.getId()));
@@ -59,21 +59,21 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 	@Test
 	public void testInvalidUpdate() {
 		HttpEntity<ResourceForm> payload = new HttpEntity<>(new ResourceForm(testName));
-		ResponseEntity<String> response = template.exchange(baseUrl + "/resource/{id}", HttpMethod.PUT, payload, String.class, UUID.randomUUID());
+		ResponseEntity<String> response = template.exchange(baseUrl + "/api/resource/{id}", HttpMethod.PUT, payload, String.class, UUID.randomUUID());
 		assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
 	}
 
 	@Test
 	public void testDelete() {
-		template.delete(baseUrl + "/resource/{id}", TestData.R3.getId());
-		ResponseEntity<String> response = template.getForEntity(baseUrl + "/resource/{id}", String.class, TestData.R3.getId());
+		template.delete(baseUrl + "/api/resource/{id}", TestData.R3.getId());
+		ResponseEntity<String> response = template.getForEntity(baseUrl + "/api/resource/{id}", String.class, TestData.R3.getId());
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 
 
 	@Test
 	public void testInvalidDelete() {
-		ResponseEntity<String> response = template.exchange(baseUrl + "/resource/{id}", HttpMethod.DELETE, null, String.class, UUID.randomUUID());
+		ResponseEntity<String> response = template.exchange(baseUrl + "/api/resource/{id}", HttpMethod.DELETE, null, String.class, UUID.randomUUID());
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 	}
 }
