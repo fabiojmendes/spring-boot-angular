@@ -1,24 +1,6 @@
 <h1>Greeting</h1>
-<div ng-controller="home" ng-show="authenticated">
-	<a href="#/add">
-		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-	</a>
-	<table class="table">
-		<tr>
-			<th>Name</th>
-			<th>Key</th>
-			<th>Actions</th>
-		</tr>
-		<tr ng-repeat="res in resources">
-			<td><a href="#/edit/{{res.id}}">{{res.name}}</a></td>
-			<td>{{res.key}}</td>
-			<td>
-				<button type="button" class="btn btn-info" ng-click="remove(res)">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-				</button>
-			</td>
-		</tr>
-	</table>
+<div ng-show="authenticated">
+	Welcome!
 </div>
 <div ng-show="!authenticated">
 	<p>Login to see your greeting</p>

@@ -1,23 +1,41 @@
-angular.module('app', [ 'ngRoute', 'ngResource', 'app.services', 'app.controllers' ])
+angular.module('app', [ 'ngRoute', 'ngResource', 'app.services', 'app.navigation', 'app.resource' ])
 	.config(function($routeProvider, $httpProvider) {
 
 		$routeProvider
+			/**
+			 * Home
+			 */
 			.when('/', {
-				templateUrl : 'templates/home.html',
-				controller : 'home'
+				redirectTo: '/home'
+			})
+			.when('/home', {
+				templateUrl : 'templates/home.html'
 			})
 			.when('/login', {
 				templateUrl : 'templates/login.html',
-				controller : 'navigation'
+				controller : 'Navigation'
 			})
-			.when('/add', {
-				templateUrl : 'templates/form.html',
-				controller : 'add'
+			/**
+			 * Resources
+			 */
+			.when('/resource', {
+				redirectTo: '/resource/list'
 			})
-			.when('/edit/:id', {
-				templateUrl : 'templates/form.html',
-				controller : 'edit'
+			.when('/resource/list', {
+				templateUrl : 'templates/resource/list.html',
+				controller : 'ResourceList'
 			})
+			.when('/resource/add', {
+				templateUrl : 'templates/resource/form.html',
+				controller : 'ResourceAdd'
+			})
+			.when('/resource/edit/:id', {
+				templateUrl : 'templates/resource/form.html',
+				controller : 'ResourceEdit'
+			})
+			/**
+			 * Default
+			 */
 			.otherwise('/');
 
 		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
