@@ -1,9 +1,7 @@
-var App = angular.module('app.navigation', []);
-
 /**
  * Navigation Controller
  */
-App.controller('Navigation',  function($rootScope, $scope, $http, $location, $route) {
+function Navigation($rootScope, $scope, $http, $location, $route) {
 	$scope.credentials = {};
 
 	$scope.tab = function(route) {
@@ -50,4 +48,4 @@ App.controller('Navigation',  function($rootScope, $scope, $http, $location, $ro
 	}
 
 	authenticate();
-});
+}

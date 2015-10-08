@@ -1,6 +1,7 @@
-angular.module('app', [ 'ngRoute', 'ngResource', 'app.services', 'app.navigation', 'app.resource' ])
-	.config(function($routeProvider, $httpProvider) {
+angular
+	.module('app', [ 'ngRoute', 'ngResource' ])
 
+	.config(function($routeProvider, $httpProvider) {
 		$routeProvider
 			/**
 			 * Home
@@ -39,4 +40,13 @@ angular.module('app', [ 'ngRoute', 'ngResource', 'app.services', 'app.navigation
 			.otherwise('/');
 
 		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-	});
+	})
+
+	.factory("Resource", Resource)
+
+	.controller("Navigation", Navigation)
+
+	.controller("ResourceList", ResourceList)
+	.controller("ResourceAdd", ResourceAdd)
+	.controller("ResourceEdit", ResourceEdit)
+;
