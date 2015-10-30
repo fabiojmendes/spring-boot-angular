@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.demo.domain.DomainEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,13 @@ public class ResourceGenerator {
 
 	private ResourceRepository resourceRepository;
 
+	private DomainEventPublisher domainEventPublisher;
+
 	@Autowired
-	public ResourceGenerator(ResourceRepository resourceRepository) {
+	public ResourceGenerator(ResourceRepository resourceRepository, DomainEventPublisher domainEventPublisher) {
 		bufferSize = 1024;
 		this.resourceRepository = resourceRepository;
+		this.domainEventPublisher = domainEventPublisher;
 	}
 
 	public void setBufferSize(int bufferSize) {
@@ -50,7 +54,7 @@ public class ResourceGenerator {
 				.collect(Collectors.toList());
 
 		String key = DigestUtils.sha1Hex(list.toString());
-		Resource resource = new Resource(UUID.randomUUID());
+		Resource resource = new Resource(UUID.randomUUID(), domainEventPublisher);
 		resource.setKey(key);
 		resource.setName(name);
 		return resourceRepository.save(resource);

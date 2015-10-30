@@ -6,6 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import org.demo.domain.DomainEvent;
+import org.demo.domain.DomainEventPublisher;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @Entity
 public class Resource {
 
@@ -17,11 +21,15 @@ public class Resource {
 
 	private String name;
 
+	@Autowired
+	transient private DomainEventPublisher eventPublisher;
+
 	@Deprecated
 	public Resource() {}
 
-	public Resource(UUID id) {
+	public Resource(UUID id, DomainEventPublisher eventPublisher) {
 		this.id = id;
+		this.eventPublisher = eventPublisher;
 	}
 
 	/**
@@ -42,6 +50,7 @@ public class Resource {
 	 * @param key the key to set
 	 */
 	public void setKey(String key) {
+		eventPublisher.publish(new DomainEvent("new key generated"));
 		this.key = key;
 	}
 

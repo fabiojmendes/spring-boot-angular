@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 
 import java.util.UUID;
 
-import org.demo.domain.resource.Resource;
 import org.demo.rest.ResourceForm;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -24,35 +23,41 @@ public class ResourceApplicationTests extends BaseIntegrationTests {
 
 	private final String testName = "Test Name";
 
+	static class ResourceJson {
+		public UUID id;
+		public String name;
+		public String key;
+	}
+
 	@Test
 	public void testAddOne() {
-		ResponseEntity<Resource> response = template.postForEntity(baseUrl + "/api/resource", new ResourceForm(testName), Resource.class);
+		ResponseEntity<ResourceJson> response = template.postForEntity(baseUrl + "/api/resource", new ResourceForm(testName), ResourceJson.class);
 		assertThat(response.getStatusCode(), is(HttpStatus.OK));
-		Resource testResource = response.getBody();
-		assertThat(testResource.getId(), notNullValue());
-		assertThat(testResource.getName(), is(testName));
-		assertThat(testResource.getKey().length(), is(40));
+		ResourceJson testResource = response.getBody();
+		assertThat(testResource.id, notNullValue());
+		assertThat(testResource.name, is(testName));
+		assertThat(testResource.key.length(), is(40));
 	}
 
 	@Test
 	public void testGetOne() {
-		ResponseEntity<Resource> response = template.getForEntity(baseUrl + "/api/resource/{id}", Resource.class, TestData.R1.getId());
+		ResponseEntity<ResourceJson> response = template.getForEntity(baseUrl + "/api/resource/{id}", ResourceJson.class, TestData.R1.getId());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		Resource responseResource = response.getBody();
-		assertThat(responseResource.getId(), is(TestData.R1.getId()));
-		assertThat(responseResource.getName(), is(TestData.R1.getName()));
-		assertThat(responseResource.getKey(), is(TestData.R1.getKey()));
+		ResourceJson responseResource = response.getBody();
+		assertThat(responseResource.id, is(TestData.R1.getId()));
+		assertThat(responseResource.name, is(TestData.R1.getName()));
+		assertThat(responseResource.key, is(TestData.R1.getKey()));
 	}
 
 	@Test
 	public void testUpdate() {
 		template.put(baseUrl + "/api/resource/{id}", new ResourceForm(testName), TestData.R2.getId());
-		ResponseEntity<Resource> response = template.getForEntity(baseUrl + "/api/resource/{id}", Resource.class, TestData.R2.getId());
+		ResponseEntity<ResourceJson> response = template.getForEntity(baseUrl + "/api/resource/{id}", ResourceJson.class, TestData.R2.getId());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		Resource responseResource = response.getBody();
-		assertThat(responseResource.getId(), is(TestData.R2.getId()));
-		assertThat(responseResource.getName(), is(testName));
-		assertThat(responseResource.getKey(), is(TestData.R2.getKey()));
+		ResourceJson responseResource = response.getBody();
+		assertThat(responseResource.id, is(TestData.R2.getId()));
+		assertThat(responseResource.name, is(testName));
+		assertThat(responseResource.key, is(TestData.R2.getKey()));
 	}
 
 

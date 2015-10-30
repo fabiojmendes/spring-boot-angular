@@ -8,12 +8,14 @@ import static org.mockito.Mockito.*;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.demo.domain.DomainEventPublisher;
 import org.demo.domain.resource.Resource;
 import org.demo.domain.resource.ResourceGenerator;
 import org.demo.domain.resource.ResourceRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -26,16 +28,19 @@ public class ResourceGeneratorTest {
 	@Mock
 	private ResourceRepository resourceRepositoryMock;
 
+	@Mock
+	private DomainEventPublisher domainEventPublisher;
+
 	private Resource testResource;
 
+	@InjectMocks
 	private ResourceGenerator generator;
 
 	@Before
 	public void setup() {
-		testResource = new Resource(UUID.randomUUID());
+		testResource = new Resource(UUID.randomUUID(), domainEventPublisher);
 		testResource.setKey("1234");
 		testResource.setName(NAME);
-		generator = new ResourceGenerator(resourceRepositoryMock);
 	}
 
 	@Test
