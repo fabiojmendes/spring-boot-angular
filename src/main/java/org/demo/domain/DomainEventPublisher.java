@@ -26,4 +26,11 @@ public class DomainEventPublisher {
 		publishedEvents.add(event);
 	}
 
+	/**
+	 * @return
+	 */
+	public Collection<DomainEvent> getPublishedEvents() {
+		return publishedEvents;
+	}
+
 }
