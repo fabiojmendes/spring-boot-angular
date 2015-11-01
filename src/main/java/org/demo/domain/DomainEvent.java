@@ -15,6 +15,9 @@ public class DomainEvent {
 
 	private Instant instant;
 
+	/**
+	 * @param name
+	 */
 	public DomainEvent(String name) {
 		this.name = name;
 		this.instant = Instant.now();

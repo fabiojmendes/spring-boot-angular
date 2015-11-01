@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 import org.demo.domain.DomainEvent;
 import org.demo.domain.DomainEventPublisher;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.demo.domain.DomainService;
 
 @Entity
 public class Resource {
@@ -21,12 +21,16 @@ public class Resource {
 
 	private String name;
 
-	@Autowired
-	transient private DomainEventPublisher eventPublisher;
+	@DomainService
+	private transient DomainEventPublisher eventPublisher;
 
 	@Deprecated
 	public Resource() {}
 
+	/**
+	 * @param id
+	 * @param eventPublisher
+	 */
 	public Resource(UUID id, DomainEventPublisher eventPublisher) {
 		this.id = id;
 		this.eventPublisher = eventPublisher;

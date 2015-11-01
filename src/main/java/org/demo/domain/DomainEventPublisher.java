@@ -22,6 +22,9 @@ public class DomainEventPublisher {
 		publishedEvents = new ArrayList<>();
 	}
 
+	/**
+	 * @param event
+	 */
 	public void publish(DomainEvent event) {
 		publishedEvents.add(event);
 	}
